@@ -19,15 +19,8 @@ const TodoPage = () => {
       if (!response.ok) {
         throw new Error('API yanıtı başarısız');
       }
-      const data = await response.json();
-      const mapped = data.map((user) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        company: user.company?.name || '',
-        isLocal: false,
-      }));
+      // API çağrısını çalıştırıyoruz ancak ekranda sadece Türkçe local örnekleri kullanıyoruz
+      await response.json();
       const localExamples = [
         {
           id: 1001,
@@ -56,9 +49,8 @@ const TodoPage = () => {
       ];
 
       // Ekranda sadece Türkçe örnek kullanıcılar görünsün
-      const combined = [...localExamples];
-      setUsers(combined);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(combined));
+      setUsers(localExamples);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(localExamples));
     } catch (err) {
       setError('Veriler alınırken bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
